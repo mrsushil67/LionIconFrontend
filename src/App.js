@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<UserSignUp />} />
-      <Route path='/login' element={ <UserLogin />} />
+      <Route path='/about' element={ <UserLogin />} />
       <Route path='/sign' element={ <UserSignUp />} />
       <Route path='/cap-login' element={ <CaptainLogin />} />
       <Route path='/cap-sign' element={ <CaptainSignUp/>} />

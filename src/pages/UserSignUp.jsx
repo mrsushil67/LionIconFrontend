@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -11,6 +12,12 @@ const navigation = [
 
 export default function UserSignUp() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate();
+
+
+  const handleClick = () => {
+    navigate('/about');
+  };
 
   return (
     <div className="bg-white">
@@ -130,7 +137,7 @@ export default function UserSignUp() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                onClick={handleClick}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
