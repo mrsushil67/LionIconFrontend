@@ -6,6 +6,8 @@ import UserSignUp from './pages/UserSignUp';
 import CaptainLogin from './pages/CaptainLogin';
 import CaptainSignUp from './pages/CaptainSignUp';
 import Navbar from './pages/Navbar';
+import VoiceListner from './pages/VoiceListner';
+import Box from './pages/Box';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Route path='/cap-login' element={ <CaptainLogin />} />
       <Route path='/cap-sign' element={ <CaptainSignUp/>} />
       <Route path='/navbar' element={<Navbar />} />
+      <Route path='/voice' element={<VoiceListner />} />
+      <Route path='/box' element={<Box />} />
     </Routes>
   );
 }
