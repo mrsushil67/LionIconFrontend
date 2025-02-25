@@ -2,9 +2,15 @@ import { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-
+    const navigate = useNavigate()
+    const token = localStorage.getItem("token")
+    if(!token){
+        navigate("/login")
+    }
+    const userName = localStorage.getItem("name")
     return (
         <div>
             <div className="flex justify-between items-center bg-white p-3 mb-3">
@@ -26,7 +32,7 @@ const Home = () => {
                         className="rounded-full w-10 h-10"
                     />
                     <div className="flex items-end">
-                        <span className="font-semibold px-2">HARSHIT</span>
+                        <span className="font-semibold px-2">{userName}</span>
                         <FaChevronDown className="text-gray-600" />
                     </div>
                 </div>

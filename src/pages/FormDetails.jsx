@@ -6,6 +6,7 @@ import ReactDOMServer from "react-dom/server";
 import PolicyCreatedAlert from "../components/PolicyCreatedAlert";
 import styled from 'styled-components';
 import { FaCheck } from "react-icons/fa";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -60,64 +61,87 @@ const Checkmark = styled.span`
 
 Modal.setAppElement("#root");
 
-const FormDetails = ({ modalIsOpen, closeModal }) => {
+const FormDetails = ({ modalIsOpen, closeModal, data }) => {
+  const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
 
+  const printEcovernote = () => {
+    console.log("printEcovernote")
+  }
+
+  const printCertificate = () => {
+    console.log("printCertificate")
+  }
+  const backBtn = () => {
+    closeModal(true)
+  }
+
   const handleCreatePolicy = () => {
+    console.log(data);
+    
     setLoading(true)
-    Swal.fire({
-      position: "top", // Ensures it's at the top
-      html: ReactDOMServer.renderToString(<Loader size={100} color="#fff" />), // Adjust size as needed
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      background: "blue", // Sets background color
-      customClass: {
-        popup: "custom-swal-popup",
-      },
-    });
+    // Swal.fire({
+    //   position: "top", // Ensures it's at the top
+    //   html: ReactDOMServer.renderToString(<Loader size={100} color="#fff" />), // Adjust size as needed
+    //   showConfirmButton: false,
+    //   allowOutsideClick: false,
+    //   background: "blue", // Sets background color
+    //   customClass: {
+    //     popup: "custom-swal-popup",
+    //   },
+    // });
   };
 
-  useEffect(() => {
-    loading ?
-      Swal.fire({
-        position: "top",
-        html: ReactDOMServer.renderToString(<Loader size={100} color="#fff" />),
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        background: "blue",
-        customClass: {
-          popup: "custom-swal-popup",
-        },
-      }) :
-      // : setTimeout(() => {
-      Swal.fire({
-        position: "top",
-        width:"20rem",
-        html: `
-               <div style="display: flex; flex-direction: column; align-items: center; text-align: center;line-height:1;">
-              
-              <i class="fa-sharp fa-solid fa-xmark" style="position: absolute; top: 7px; right: 10px; font-size: 13px; color: #333; cursor: pointer;"></i>
-            
-                <i style="font-size: 15px; margin-bottom: 10px;color:#208ceb;">Your policy has been created<br>successfully</i>
-                <div style="width: 100px; height: 100px; border-radius: 50%; background-color: #4f2804; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
-                   <i class="fa-sharp fa-solid fa-check" style="color:white; font-size:60px" aria-hidden="true"></i>
-                </div>
-                <div>
-                <button style="border : 1px solid green; padding:7px;background-color:#6ad0ae; margin:2px;border-radius:3px; color:white; font-size:10px;width:100px">Print<br>E-Covernote</button>
-                <button style="border : 1px solid #f88d3e; padding:7px;background-color:#f8a466; margin:2px;border-radius:3px; color:white; font-size:10px;width:100px">Print<br>Certificate</button>
-                </div>
-                </div>`
-        ,
-        showConfirmButton: false,
-        customClass: {
-          // popup: "custom-swal-popup",
-        },
-      });
+  // useEffect(() => {
+  //   loading ?
+  //     Swal.fire({
+  //       position: "top",
+  //       html: ReactDOMServer.renderToString(<Loader size={100} color="#fff" />),
+  //       showConfirmButton: false,
+  //       allowOutsideClick: false,
+  //       background: "blue",
+  //       customClass: {
+  //         popup: "custom-swal-popup",
+  //       },
+  //     }) :
+  //     // : setTimeout(() => {
+  //     Swal.fire({
+  //       position: "top",
+  //       allowOutsideClick : false,
+  //       width: "20rem",
+  //       html: `
+  //              <div style="display: flex; flex-direction: column; align-items: center; text-align: center;line-height:1;">
 
+  //             <i id="closeSwal" class="fa-sharp fa-solid fa-xmark" style="position: absolute; top: 7px; right: 10px; font-size: 13px; color: #333; cursor: pointer;"></i>
 
-    // }, 3000);
-  }, [loading]);
+  //               <i style="font-size: 15px; margin-bottom: 10px;color:#208ceb;">Your policy has been created<br>successfully</i>
+  //               <div style="width: 100px; height: 100px; border-radius: 50%; background-color: #4f2804; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+  //                  <i class="fa-sharp fa-solid fa-check" style="color:white; font-size:60px" aria-hidden="true"></i>
+  //               </div>
+  //               <div>
+  //               <button id="printEcovernote" style="border : 1px solid green; padding:7px;background-color:#6ad0ae; margin:2px;border-radius:3px; color:white; font-size:10px;width:100px">Print<br>E-Covernote</button>
+  //               <button id="printCertificate" style="border : 1px solid #f88d3e; padding:7px;background-color:#f8a466; margin:2px;border-radius:3px; color:white; font-size:10px;width:100px">Print<br>Certificate</button>
+  //               </div>
+  //               </div>`
+  //       ,
+  //       showConfirmButton: false,
+  //       didOpen: () => {
+  //         document.getElementById("closeSwal").addEventListener("click", function () {
+  //           Swal.close();
+  //       });
+
+  //         document.getElementById("printEcovernote").addEventListener("click", function () {
+  //           printEcovernote();
+  //         });
+
+  //         document.getElementById("printCertificate").addEventListener("click", function () {
+  //           printCertificate();
+  //         });
+  //       }
+  //     });
+  //   // }, 3000);
+  // }, [loading]);
 
   return (
     <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
@@ -135,10 +159,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">7845454556</td>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">2003-01-01</td>
+                <td className="border p-1">{data.customerName}</td>
+                <td className="border p-1">{data.customerMobile}</td>
+                <td className="border p-1">{data.customerF_HName}</td>
+                <td className="border p-1">{data.customerDob}</td>
               </tr>
             </tbody>
             <thead>
@@ -151,10 +175,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">7845454556</td>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">2003-01-01</td>
+                <td className="border p-1">{data.customerAge}</td>
+                <td className="border p-1">{data.customerAadharNumber}</td>
+                <td className="border p-1">{data.customerPan}</td>
+                <td className="border p-1">{data.customerGender}</td>
               </tr>
             </tbody>
             <thead>
@@ -164,7 +188,7 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1 text-left px-6" colSpan="4">sector 33 rajiv calony near sapna hotel gurugram haryana</td>
+                <td className="border p-1 text-left px-6" colSpan="4">{`${data.billAddL1} ${data.billAddL2} ${data.billAddArea} ${data.billAddCity} ${data.billAddState}`}</td>
               </tr>
             </tbody>
           </table>
@@ -183,10 +207,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">Male</td>
-                <td className="border p-1">1995-01-01</td>
+                <td className="border p-1">{data.nomineeName}</td>
+                <td className="border p-1">{data.nomineeRelation}</td>
+                <td className="border p-1">{data.nomineeGender}</td>
+                <td className="border p-1">{data.nomineeDob}</td>
               </tr>
             </tbody>
           </table>
@@ -205,10 +229,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">Male</td>
-                <td className="border p-1">1995-01-01</td>
+                <td className="border p-1">{data.engineNo}</td>
+                <td className="border p-1">{data.chassNo}</td>
+                <td className="border p-1">{data.model}</td>
+                <td className="border p-1">{data.subModel}</td>
               </tr>
             </tbody>
             <thead>
@@ -221,10 +245,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">TESTING</td>
-                <td className="border p-1">Male</td>
-                <td className="border p-1">1995-01-01</td>
+                <td className="border p-1">{data.mfgYear}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.ex_showroom_price}</td>
+                <td className="border p-1">{data.vehicle_ex_showroom}</td>
               </tr>
             </tbody>
           </table>
@@ -243,10 +267,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">1226.41</td>
-                <td className="border p-1">1042.45</td>
-                <td className="border p-1">183.96</td>
-                <td className="border p-1">153.67</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
               </tr>
             </tbody>
             <thead>
@@ -259,10 +283,10 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">1226.41</td>
-                <td className="border p-1">1042.45</td>
-                <td className="border p-1">183.96</td>
-                <td className="border p-1">153.67</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
               </tr>
             </tbody>
             <thead>
@@ -275,24 +299,23 @@ const FormDetails = ({ modalIsOpen, closeModal }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="border p-1">1226.41</td>
-                <td className="border p-1">1042.45</td>
-                <td className="border p-1">183.96</td>
-                <td className="border p-1">153.67</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.color}</td>
+                <td className="border p-1">{data.financer_name}</td>
+                <td className="border p-1">{data.hypo_city}</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="mt-2 flex justify-end">
-          <button className="px-3 py-1 ml-1 bg-orange-400 text-white rounded-sm shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs">← Back</button>
+          <button className="px-3 py-1 ml-1 bg-orange-400 text-white rounded-sm shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs" onClick={backBtn }>← Back</button>
           <button className="px-3 py-1 ml-1 bg-[#009E41] text-white rounded-sm shadow-sm hover:bg-[#009E41] focus:outline-none focus:ring-2 focus:ring-[#009E41] text-xs"><span style={{ fontSize: '8px' }}>🖨️</span>Download</button>
           <button className="px-3 py-1 ml-1 bg-[#04989D] text-white rounded-sm shadow-sm hover:bg-[#04989D] focus:outline-none focus:ring-2 focus:ring-[#04989D] text-xs"
             onClick={handleCreatePolicy}
-            disabled={loading}
+            // disabled={loading}
           >
             Create Policy
           </button>
-          <PolicyCreatedAlert />
         </div>
       </div>
     </Modal>

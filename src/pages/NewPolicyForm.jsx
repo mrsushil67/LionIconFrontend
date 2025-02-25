@@ -3,6 +3,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 import axios from 'axios';
 import FormDetails from './FormDetails';
+import config from '../config/config';
 
 
 const NewPolicyForm = () => {
@@ -19,6 +20,7 @@ const NewPolicyForm = () => {
         customerF_HName: "",
         customerAge: "",
         customerDob: "",
+        customerAadharNumber: "",
         customerGender: "",
         customerAadhar_f: "",
         customerAadhar_b: "",
@@ -102,9 +104,12 @@ const NewPolicyForm = () => {
 
         try {
             console.log("sss : ", selectedFile)
-            const response = await axios.post('http://192.168.192.21:2000/policy/uploadPdf', formdata, {
+           const token = localStorage.getItem("token")
+        //    console.log(` ${config.host}${config.uploadDoc}, ${token}`)
+            const response = await axios.post(`${config.host}${config.uploadDoc.url}`, formdata, {
                 headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlN1bWl0ICIsImVtYWlsIjoic3VtaXRAZ21haWwuY29tIiwibW9iaWxlIjoiODUzMzk0Mzc1MSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaXNEZWxldGVkIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiYWRkZWRCeSI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMi0wMlQwODozODowNC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyNS0wMi0wMlQwODozODowNC4wMDBaIiwiaWF0IjoxNzM4NDg1OTI1fQ.nmoaKzJQWrsIaJgiw1Wz6Ox8kQ10myfS--6B1zdySWQ'
+                    
+                    Authorization: `Bearer ${token}`
                 }
             });
 
@@ -144,15 +149,13 @@ const NewPolicyForm = () => {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("user : ", formData);
-        const data = formData;
         setIsOpen(true);
-        setFormData(initialState)
+        // setFormData(initialState)
 
         // try {
         //     const response = await axios.post("http://192.168.192.21:2000/policy/create", data, {
         //         headers: {
-        //             Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlN1bWl0ICIsImVtYWlsIjoic3VtaXRAZ21haWwuY29tIiwibW9iaWxlIjoiODUzMzk0Mzc1MSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaXNEZWxldGVkIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiYWRkZWRCeSI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMi0wMlQwODozODowNC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyNS0wMi0wMlQwODozODowNC4wMDBaIiwiaWF0IjoxNzM4NDg1OTI1fQ.nmoaKzJQWrsIaJgiw1Wz6Ox8kQ10myfS--6B1zdySWQ'
+        //             Authorization:  `Bearer ${localStorage.getItem("token")}`
         //         }
         //     })
         //     console.log(response.data)
@@ -182,8 +185,8 @@ const NewPolicyForm = () => {
                                 { label: 'Father/Husband Name', required: true, type: "text", name: 'customerF_HName' },
                                 { label: 'Customer Age (In Year)', required: true, type: "number", name: 'customerAge' },
                                 { label: 'Date Of Birth', required: true, type: "date", name: 'customerDob' },
-                                { label: 'Customer Aadhar No', required: true, type: "number", name: 'cAdharNo' },
-                                { label: 'Customer PAN', required: false, type: "text", name: 'cPan' }
+                                { label: 'Customer Aadhar No', required: true, type: "number", name: 'customerAadharNumber' },
+                                { label: 'Customer PAN', required: false, type: "text", name: 'customerPan' }
                             ].map((field, index) => (
                                 <div key={index}>
                                     <label className="block text-[10px] text-blue-800 mb-1">
@@ -421,7 +424,7 @@ const NewPolicyForm = () => {
                             <button className="px-3 py-1 bg-orange-400 text-white rounded-sm shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500">← Back</button>
                             <button className="ml-2 px-3 py-1 bg-[#32a8a4] text-white rounded-sm shadow-sm hover:bg-[#328c89] focus:outline-none focus:ring-2 focus:ring-[#328c89]">Continue </button>
 
-                            <FormDetails modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} closeModal={closeModal} data={data}/>
+                            <FormDetails modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} closeModal={closeModal} data={formData}/>
 
                         </div>
                     </div>

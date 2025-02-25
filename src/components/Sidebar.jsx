@@ -70,7 +70,8 @@ const Sidebar = () => {
 
     return (
         <aside className="w-48 bg-gray-800 text-white">
-            <h1 className="text-xl font-bold mb-6">MOTORRANTY</h1>
+            {/* <h1 className="text-xl font-bold mb-6">MOTORRANTY</h1> */}
+            <img src="images/logo.png" alt="logo" className="pt-3 pl-3 w-[110px]" />
             <ul>
                 {menuItems.map((item, index) => (
                     <li key={index} className="py-2 px-3 text-xs hover:bg-gray-700 cursor-pointer">
